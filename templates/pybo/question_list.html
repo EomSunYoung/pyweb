@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>index 페이지</title>
+</head>
+<body>
+    <h2>질문 목록</h2>
+    {% if question_list %}
+    <ul>
+        {% for question in question_list %}
+        <li>
+            <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+
+    {% endif %}
+</body>
+</html>
