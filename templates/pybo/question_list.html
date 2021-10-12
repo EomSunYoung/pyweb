@@ -25,18 +25,4 @@
         </table>
         <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">질문 등록</a>
     </div>
-
-<!--    <h2>질문 목록</h2>-->
-<!--    {% if question_list %}-->
-<!--    <ul>-->
-<!--        {% for question in question_list %}-->
-<!--        <li>-->
-<!--            <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>-->
-<!--        </li>-->
-<!--        {% endfor %}-->
-<!--    </ul>-->
-<!--    {% else %}-->
-<!--        <p>질문이 없습니다.</p>-->
-<!--    {% endif %}-->
-<!--    <a href="{% url 'pybo:question_create' %}">질문 등록</a>-->
 {% endblock %}
