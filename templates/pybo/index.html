@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div id="container">
+    <div class="jumbotron">
+        <div class="text-center"><h2>Welcome~ Have a Nine Day!</h2></div>
+    </div>
+    <div class="text-center">
+        <img src="{% static 'pybo/images/coffee-blue.jpg' %}" id="pic">
+    </div>
+    <div>
+        <p id="demo" class="text-center my-3"></p>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    var pic = document.getElementById('pic')
+    pic.addEventListener('mouseover', function(){
+        pic.src = '../../static/pybo/images/coffee-pink.jpg';
+    });
+
+    pic.addEventListener('mouseout', function(){
+        pic.src = '../../static/pybo/images/coffee-blue.jpg';
+    });
+
+    setInterval(mywatch, 1000);
+    function mywatch(){
+        var date = new Date();
+        var now = date.toLocaleTimeString();
+        document.getElementById('demo').innerHTML = now;
+    }
+
+<!-- $(document).ready(function(){ -->
+<!--     $('#pic').on('mouseover', function(){-->
+
+<!--  });-->
+<!--      });-->
+</script>
+{% endblock %}
