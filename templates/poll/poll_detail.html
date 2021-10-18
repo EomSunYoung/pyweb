@@ -1,24 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container my-3">
-    <div class="card my-3">
-        <div class="card-body">
-            <form action="{% url 'poll:vote' question.id %}" method="post" class="form_vote">
+    <div class="row">
+        <div class="col-6">
+            <form action="{% url 'poll:vote' question.id %}" method="post">
                 {% csrf_token %}
-                <fieldset>
-                    <legend><h3>{{ question.question_text }}</h3></legend>
-                    {% if error_message %}
-                    <p><strong>{{ error_message }}</strong></p>
-                    {% endif %}
-
-                    {% for choice in question.choice_set.all %}
-                    <p>
-                        <input type="radio" name="choice" id="choice{{ forloop.counter }}"
-                               value="{{ choice.id }}">
-                        <label for="choice{{ forloop.counter }}"> {{ choice.choice_text }}</label>
-                        {% endfor %}
-                </fieldset>
-                <button type="submit" class="btn btn-primary">투표하기</button>
+                <div class="card my-3">
+                    <div class="card-body">
+                        <div class="card-title" style="font-size: 1.3rem">
+                            {{ question.question_text }}
+                        </div>
+                        <div class="card-text my-3">
+                            {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                            {% endif %}
+                            {% for choice in question.choice_set.all %}
+                            <div class="form-group px-2">
+                                <input type="radio" name="choice" id="choice {{ forloop.counter }}"
+                                        value="{{ choice.id }}">
+                                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                            </div>
+                            {% endfor %}
+                            <input type="submit" value="투표" class="btn btn-success">
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

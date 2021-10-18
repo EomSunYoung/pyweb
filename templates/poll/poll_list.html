@@ -1,24 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<div id="container my-3">
-    <h2>설문 목록 페이지</h2>
-    <table class="table">
-        <thead>
-            <tr class="text-center thead-dark">
-                <th style="width:55%">질문</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for question in question_list %}
-            <tr>
-                <td class="text-center">
-                    <a href="{% url 'poll:poll_detail' question.id %}">{{ question.question_text }}</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-12">
+            <h4>설문 목록</h4>
+        </div>
+    {% if question_list %}
+        {% for question in question_list %}
+        <div class="col-4 my-3">
+            <div class="card" style="height: 12rem">
+                <div class="card-body">
+                    <div class="card-text my-2" style="line-height: 2rem">
+                        {{ question.question_text }}
+                    </div>
+                    <a href="{% url 'poll:poll_detail' question.id %}"
+                       class="btn btn-primary my-4">투표하기</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>설문이 없습니다.</p>
+    {% endif %}
+    </div>
 </div>
 {% endblock %}
 

@@ -1,14 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container my-3">
-    <div class="card my-3">
-        <h3 class="border-bottom py-2">{{ question.question_text }}</h3>
-        <div class="card-body">
-            {% for choice in question.choice_set.all %}
-            <div class="card-text" style="white-space: pre-line;">
-                {{ choice.choice_text }} -- {{ choice.votes }} vote
+    <div class="row">
+        <div class="col-6">
+            <div class="card my-3">
+                <div class="card-body">
+                    <div class="card-title" style="font-size: 1.3rem">투표 결과</div>
+                    <div class="card-text" style="line-height: 3rem">
+                        <ul>
+                            {% for choice in question.choice_set.all %}
+                            <li>
+                                {{ choice.choice_text }} -- {{choice.votes }} votes
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <a href="{% url 'poll:poll_detail' question.id %}" class="btn btn-info">재투표</a>
+                    </div>
+                </div>
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>
