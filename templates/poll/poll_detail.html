@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+    <div class="card my-3">
+        <div class="card-body">
+            <form action="{% url 'poll:vote' question.id %}" method="post" class="form_vote">
+                {% csrf_token %}
+                <fieldset>
+                    <legend><h3>{{ question.question_text }}</h3></legend>
+                    {% if error_message %}
+                    <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    {% for choice in question.choice_set.all %}
+                    <p>
+                        <input type="radio" name="choice" id="choice{{ forloop.counter }}"
+                               value="{{ choice.id }}">
+                        <label for="choice{{ forloop.counter }}"> {{ choice.choice_text }}</label>
+                        {% endfor %}
+                </fieldset>
+                <button type="submit" class="btn btn-primary">투표하기</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
