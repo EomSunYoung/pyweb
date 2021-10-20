@@ -29,7 +29,13 @@
         <tr>
             <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td>
-                <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
+                <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}
+                    {% if question.answer_set.count > 0 %}
+                    <span class="text-danger" small ml-2>
+                        {{ question.answer_set.count }}
+                    </span>
+                    {% endif %}
+                </a>
             </td>
             <td>{{ question.author.username }}</td>
             <td>{{ question.create_date }}</td>
@@ -98,5 +104,20 @@
 
 {% endblock %}
 {% block script %}
+<script type="text/javascript">
+$(document).ready(function(){
+    // 페이지 클릭
+    $('.page-link').on('click', function(){
+        $('#page').val($(this).data('page'));   // data-page의 page 번호를 id가 page인 필드에 설정
+        $('#searchForm').submit();    // 폼을 전송
+    });
 
+    // 검색 버튼 클릭
+    $('#btn_search').on('click', function(){
+        $('#kw').val($('.kw').val());  // 입력된 kw값을 id가 kw인 필드에 설정
+        $('#page').val(1);    // 1페이지부터 검색
+        $('#searchForm').submit();    // 폼을 전송
+    });
+});
+</script>
 {% endblock %}
