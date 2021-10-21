@@ -1,30 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container my-3">
+    <!-- 추천 오류 표시 -->
+    {% if messages %}
+        <div class="alert alert-danger my-3" role="alert">
+            {% for message in message %}
+            <strong>{{ message.tags }}</strong>
+            <ul>
+                <li>{{ message.message }}</li>
+            </ul>
+            {% endfor %}
+        </div>
+    {% endif %}
     <!-- 질문 내용 -->
         <h2 class="border-bottom py-2">{{ question.subject }}</h2>
-        <div class="card my-3">
-            <div class="card-body">
-                <div class="card-text" style="white-space: pre-line;">
-                    {{ question.content }}
+        <!-- 추천 영역 -->
+        <div class="row my-3">
+            <div class="col-1">
+                <div class="bg-light text-center p-3 font-weight-border mb-1">
+                    {{ question.voter.count }}
                 </div>
-                <div class="d-flex justify-content-end">
-                    <div class="badge badge-light p-2 text-left">
-                        <div class="mb-2">{{ question.author.username }}</div>
-                        <div>{{ question.create_date }}</div>
+                <a href="#" data-uri="{% url 'pybo:vote_question' question.id %}"
+                   class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
+            </div>
+            <div class="col-11">
+                <!-- 기존 내용 -->
+                <div class="card my-3">
+                    <div class="card-body">
+                        <div class="card-text" style="white-space: pre-line;">
+                            {{ question.content }}
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="badge badge-light p-2 text-left mx-3">
+                                <div class="mb-2">modified at</div>
+                                <div>{{ question.modify_date }}</div>
+                            </div>
+                            <div class="badge badge-light p-2 text-left">
+                                <div class="mb-2">{{ question.author.username }}</div>
+                                <div>{{ question.create_date }}</div>
+                            </div>
+                        </div>
+                        {% if request.user == question.author %}
+                        <div class="my-3">
+                            <a href="{% url 'pybo:question_modify' question.id %}"
+                                class="btn btn-sm btn-outline-secondary">수정</a>
+                            <a data-uri="{% url 'pybo:question_delete' question.id %}" href="#"
+                                class="delete btn btn-sm btn-outline-secondary">삭제</a>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
-                {% if request.user == question.author %}
-                <div class="my-3">
-                    <a href="{% url 'pybo:question_modify' question.id %}"
-                       class="btn btn-sm btn-outline-secondary">수정</a>
-                    <a data-uri="{% url 'pybo:question_delete' question.id %}" href="#"
-                       class="delete btn btn-sm btn-outline-secondary">삭제</a>
-                </div>
-                {% endif %}
-            </div>
+            </div>    <!-- 카드 종료 -->
         </div>
-
         <h5 class="border-bottom my-3 py-2">
             {{ question.answer_set.count }}개의 답변이 있습니다.
         </h5>
@@ -58,11 +85,20 @@
 {% block script %}
 <script>
 $(document).ready(function(){
+    // 삭제 시
     $('.delete').on('click', function(){
         if(confirm("정말로 삭제하시겠습니까?")){
             location.href = $(this).data('uri');
         }
     });
+    // 추천 시
+    $('.recommend').on('click', function(){
+        if(confirm("정말로 추천하시겠습니까?")){
+            location.href = $(this).data('uri');
+        }
+    });
 });
+
+
 </script>
 {% endblock %}
