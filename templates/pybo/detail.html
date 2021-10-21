@@ -4,7 +4,7 @@
     <!-- 추천 오류 표시 -->
     {% if messages %}
         <div class="alert alert-danger my-3" role="alert">
-            {% for message in message %}
+            {% for message in messages %}
             <strong>{{ message.tags }}</strong>
             <ul>
                 <li>{{ message.message }}</li>
