@@ -18,6 +18,7 @@
         <thead>
             <tr class="text-center thead-dark">
                 <th>번호</th>
+                <th>추천</th>
                 <th style="width:55%">제목</th>
                 <th>글쓴이</th>
                 <th>작성일시</th>
@@ -28,6 +29,13 @@
         {% for question in question_list %}
         <tr>
             <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td>
+                {% if question.voter.all.count %}
+                <span class="bacge badge-warning px-2 py-1">
+                    {{ question.voter.all.count }}
+                </span>
+                {% endif %}
+            </td>
             <td>
                 <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}
                     {% if question.answer_set.count > 0 %}

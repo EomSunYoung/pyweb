@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import base_views, question_views, answer_views, vote_views
+from .views import base_views, question_views, answer_views, vote_views, comment_views
 
 app_name = 'pybo'
 
@@ -28,4 +28,9 @@ urlpatterns = [
     # vote_views
     # 질문 추천
     path('vote/question/<int:question_id>/', vote_views.vote_question, name='vote_question'),
+
+    # comment_views
+    # 댓글 등록
+    path('comment/create/question/<int:question_id>/', comment_views.comment_create_question,
+         name='comment_create_question'),
 ]
